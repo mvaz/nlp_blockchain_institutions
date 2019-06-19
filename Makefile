@@ -24,6 +24,7 @@ endif
 requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
+	wget https://maven.ceon.pl/artifactory/kdd-releases/pl/edu/icm/cermine/cermine-impl/1.13/cermine-impl-1.13-jar-with-dependencies.jar
 
 ## Make Dataset
 data: requirements
@@ -80,6 +81,8 @@ test_environment:
 # PROJECT RULES                                                                 #
 #################################################################################
 
+downloads: 
+	$(PYTHON_INTERPRETER) src/data/download_docs.py docs.yml data/raw
 
 
 #################################################################################

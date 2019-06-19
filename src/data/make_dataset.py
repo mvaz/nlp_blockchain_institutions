@@ -10,6 +10,7 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import StringIO
 import os
+import re
 
 def convert_pdf_to_txt(path_to_file):
     rsrcmgr = PDFResourceManager()
@@ -44,12 +45,14 @@ def main(input_filepath, output_filepath):
     logger.info('making final data set from raw data')
     logger.info(input_filepath)
     logger.info(output_filepath)
+    
     for x in os.listdir(input_filepath):
         x_ = os.path.join(input_filepath, x)
         if not os.path.isfile(x_) or not x_.endswith('.pdf'): continue
         txt = convert_pdf_to_txt(x_)
         with open(os.path.join(output_filepath, x + '.txt'), 'w+') as f:
-            f.write(txt)
+            text = re.sub(r'-\n(\w+ *)', r'\1\n', txt)
+            f.write(text)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'

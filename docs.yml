@@ -1,0 +1,61 @@
+# \a list:
+# - 1
+# - 42
+# - 3.141
+# - 1337
+# - help
+# - €
+# a string: bla
+# another dict:
+#   foo: bar
+#   key: value
+#   the answer: 42
+
+pdfs:
+- url: https://www.ecb.europa.eu/paym/intro/publications/pdf/ecb.miptopical190604.en.pdf
+  filename: ecb.miptopical190604.en.pdf
+  entity: European Central Bank
+
+- url: https://www.ecb.europa.eu/pub/pdf/other/ecb.stella_project_report_september_2017.pdf
+  filename: ecb.stella_project_report_september_2017.pdf
+  entity: European Central Bank
+
+- url: https://www.ecb.europa.eu/pub/pdf/other/stella_project_report_march_2018.pdf
+  filename: stella_project_report_march_2018.pdf
+  entity: European Central Bank
+
+- url: https://www.bundesbank.de/resource/blob/707710/3f3bd66e8c8a0fbeb745886b3f072b15/mL/2017-09-distributed-data.pdf
+  filename: 2017-09-distributed-data.pdf
+  entity: Bundesbank
+
+- url: https://www.bundesbank.de/resource/blob/766672/29feab3f9079540441e3abda1ed2d2c1/mL/2018-10-25-blockbaster-final-report-data.pdf
+  filename: 2018-10-25-blockbaster-final-report-data.pdf
+  entity: Bundesbank, Deutsche Börse
+
+- url: https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/752070/cryptoassets_taskforce_final_report_final_web.pdf
+  filename: cryptoassets_taskforce_final_report_final_web.pdf
+  entity: UK Government
+
+- url: https://www.bankofengland.co.uk/-/media/boe/files/working-paper/2019/monetary-financing-with-interest-bearing-money.pdf
+  filename: monetary-financing-with-interest-bearing-money.pdf
+  entity: Bank of England
+
+- url: https://www.bankofengland.co.uk/-/media/boe/files/working-paper/2018/central-bank-digital-currencies-design-principles-and-balance-sheet-implications
+  filename: central-bank-digital-currencies-design-principles-and-balance-sheet-implications.pdf
+  entity: Bank of England
+
+- url: https://www.bot.or.th/English/DebtSecurities/Documents/DLT%20Scripless%20Bond.pdf
+  filename: BOT_DLT_Scriptless_Bond.pdf
+  entity: Bank of Thailand
+
+- url: https://www.ecb.europa.eu/pub/pdf/scpops/ecbop172.en.pdf
+  filename: ecbop172.en.pdf
+  entity: European Central Bank
+
+- url: https://www.bis.org/cpmi/publ/d157.pdf
+  filename: d157.pdf
+  entity: Bank of International Settlements
+  
+- url: https://www.bankofengland.co.uk/-/media/boe/files/working-paper/2017/the-economics-of-distributed-ledger-technology-for-securities-settlement.pdf
+  filename: the-economics-of-distributed-ledger-technology-for-securities-settlement.pdf
+  entity: Bank of England
