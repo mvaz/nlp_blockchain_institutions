@@ -24,10 +24,13 @@ endif
 requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-	wget https://maven.ceon.pl/artifactory/kdd-releases/pl/edu/icm/cermine/cermine-impl/1.13/cermine-impl-1.13-jar-with-dependencies.jar
+	# wget https://maven.ceon.pl/artifactory/kdd-releases/pl/edu/icm/cermine/cermine-impl/1.13/cermine-impl-1.13-jar-with-dependencies.jar
 
 ## Make Dataset
-data: requirements
+data:
+	cp data/external/*pdf data/raw
+	java -cp cermine-impl-1.13-jar-with-dependencies.jar pl.edu.icm.cermine.ContentExtractor -path data/raw -outputs jats
+	mv data/raw/*.cermxml data/processed/
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
 
 ## Delete all compiled Python files
@@ -82,7 +85,9 @@ test_environment:
 #################################################################################
 
 downloads: 
-	$(PYTHON_INTERPRETER) src/data/download_docs.py docs.yml data/raw
+	$(PYTHON_INTERPRETER) src/data/download_docs.py docs.yml data/external
+
+
 
 
 #################################################################################

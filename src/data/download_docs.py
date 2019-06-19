@@ -14,15 +14,12 @@ from pprint import pprint
 import os
 import wget
 
-url = 'http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg'  
-
-
 def download_url(url, file_output):
     logger = logging.getLogger(__name__)
     logger.info('downloading single document')
     pprint(url)
     pprint(file_output)
-    wget.download(url, file_output)  
+    wget.download(url, file_output)
 
 def handle_file():
     pass
@@ -42,7 +39,10 @@ def main(docs, output_filepath):
     config = yaml.safe_load(docs)
     pprint(config['pdfs'])
     for doc in config['pdfs']:
-        download_url(doc['url'], os.path.join(output_filepath, doc['filename']))
+        try:
+            download_url(doc['url'], os.path.join(output_filepath, doc['filename']))
+        except e:
+            logger.error(e)
 
 
 

@@ -12,3 +12,5 @@ pdfminer.six
 spacy
 pyyaml<=5.1
 wget
+# conda install -c anaconda beautifulsoup4
+lxml
