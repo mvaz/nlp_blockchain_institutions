@@ -55,7 +55,46 @@ pdfs:
 - url: https://www.bis.org/cpmi/publ/d157.pdf
   filename: d157.pdf
   entity: Bank of International Settlements
+
+- url: https://www.bis.org/cpmi/publ/d174.pdf
+  filename: d174.pdf
+  entity: Bank of International Settlements
+
+- url: https://www.bis.org/publ/work698.pdf
+  filename: work698.pdf
+  entity: Bank of International Settlements
+
+- url: https://www.bis.org/publ/qtrpdf/r_qt1709f.pdf
+  filename: r_qt1709f.pdf
+  entity: Bank of International Settlements
+
+- url: https://www.bis.org/review/r180313a.htm
+  filename: r180313a.pdf
+  entity: Bank of International Settlements
+
+- url: https://www.imf.org/~/media/Files/Publications/SDN/2018/SDN1808.ashx
+  filename: SDN1808.pdf
+  entity: International Monetary Fund
   
+
 - url: https://www.bankofengland.co.uk/-/media/boe/files/working-paper/2017/the-economics-of-distributed-ledger-technology-for-securities-settlement.pdf
   filename: the-economics-of-distributed-ledger-technology-for-securities-settlement.pdf
   entity: Bank of England
+
+- url: https://www.federalreserve.gov/econresdata/feds/2016/files/2016095pap.pdf
+  filename: 2016095pap.pdf
+  entity: Federal Reserve
+  
+- url: https://www.r3.com/wp-content/uploads/2018/11/CBDC_Brazil_R3.pdf
+  filename: CBDC_Brazil_R3.pdf
+  entity: R3
+
+
+- url: http://www.bnm.gov.my/index.php?ch=en_publication&pg=en_staffinsight&ac=45&bb=file
+  filename: bnm_gov_my.pdf
+  entity: Central Bank of Malaysia
+  
+- url: http://www.bnm.gov.my/index.php?ch=en_publication&pg=en_staffinsight&ac=45&bb=file
+  filename: bnm_gov_my.pdf
+  entity: The Institute and Faculty of Actuaries (IFoA)
+  

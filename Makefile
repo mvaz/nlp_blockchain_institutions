@@ -84,9 +84,9 @@ test_environment:
 # PROJECT RULES                                                                 #
 #################################################################################
 
+# Download external pdfs
 downloads: 
 	$(PYTHON_INTERPRETER) src/data/download_docs.py docs.yml data/external
-
 
 
 
