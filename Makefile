@@ -87,6 +87,7 @@ test_environment:
 # Download external pdfs
 downloads: 
 	$(PYTHON_INTERPRETER) src/data/download_docs.py docs.yml data/external
+	python -m spacy download en_core_web_lg
 
 
 

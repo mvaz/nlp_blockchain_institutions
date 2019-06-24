@@ -98,3 +98,11 @@ pdfs:
   filename: bnm_gov_my.pdf
   entity: The Institute and Faculty of Actuaries (IFoA)
   
+
+- url: https://www.riksbank.se/globalassets/media/rapporter/e-krona/2018/the-riksbanks-e-krona-project-report-2.pdf
+  filename: the-riksbanks-e-krona-project-report-2.pdf
+  entity: Sveriges Riksbank
+
+- url: https://www.riksbank.se/globalassets/media/rapporter/e-krona/2017/rapport_ekrona_uppdaterad_170920_eng.pdf
+  filename: the-riksbanks-e-krona-project-report-1.pdf
+  entity: Sveriges Riksbank

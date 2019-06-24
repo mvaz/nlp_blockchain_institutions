@@ -1,18 +1,29 @@
 from bs4 import BeautifulSoup
 import click
 import logging
+import os
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 
-import spacy
-from spacy.lang.en import English
+import textacy
+import textacy.keyterms
+import ftfy
 
 # Load English tokenizer, tagger, parser, NER and word vectors
-nlp = English()
+en = textacy.load_spacy_lang("en_core_web_lg")
+patterns = [
+    {"label": "ORG", "pattern": [{"lower": "european"}, {"lower": "central"}, {"lower": "bank"}]},
+    {"label": "ORG", "pattern": [{"lower": "bank"}, {"lower": "of"}, {"lower": "japan"}]},
+    {"label": "ORG", "pattern": [{"lower": "distributed"}, {"lower": "ledger"}, {"lower": "technology"}]},
+    {"label": "ORG", "pattern": [{"lower": "consensus"}, {"lower": "mechanism"}]},
+]
+
+
+# terms = (u"dlt", u"blockchain", u"distributed ledger technology", u"corda")
+# entity_matcher = EntityMatcher(nlp, terms, "ANIMAL")
 
 # from spacy.matcher import PhraseMatcher
 # from spacy.tokens import Span
-
 
 def get_title(soup):
     return soup.select('article-title')
@@ -36,7 +47,7 @@ def get_paragraphs(soup):
     for sec in soup.find_all('sec'):
         print(sec['id'])
         for i, p in enumerate(sec.find_all('p')):
-            print(">>>>>", p)
+            logging.debug(p)
             paragraphs.append({
                 'section_id': sec['id'],
                 'paragraph_id': "%s_%d" % (sec['id'], i),
@@ -45,10 +56,34 @@ def get_paragraphs(soup):
 
 def build_features(filename):
     infos = extract_info(filename)
-    spacy.load('en')
     for p in infos['paragraphs']:
-        a = nlp(p)
+        yield scrub(p)
+        
     # return extract_info('nlp-blockchain-projects/data/processed/2017-09-distributed-data.cermxml')
+
+# Replace a token with "REDACTED" if it is a name
+def replace_name_with_placeholder(token):
+    if token.ent_iob != 0 and token.ent_type_ == "PERSON":
+        return "[REDACTED] "
+    else:
+        return token.string
+
+# Loop through all the entities in a document and check if they are names
+def scrub(paragraph):
+    txt = ftfy.fixes.fix_line_breaks(paragraph['raw_text'])
+    txt = textacy.preprocess.normalize_whitespace(txt)
+    text = textacy.preprocess_text(txt, lowercase=True, no_punct=False, fix_unicode=False, no_urls=True)
+    doc = textacy.make_spacy_doc(text, lang=en)
+    # doc = nlp(text['raw_text'])
+    # for ent in doc.ents:
+    #     ent.merge()
+    # tokens = map(replace_name_with_placeholder, doc)
+    return {
+        'textrank': textacy.keyterms.textrank(doc, normalize="lemma", n_keyterms=10),
+        'sgrank': textacy.keyterms.sgrank(doc, ngrams=(1, 2, 3, 4), normalize="lower", n_keyterms=0.1),
+        'entities': list(textacy.extract.entities(doc))
+    }
+
 
 @click.command()
 # @click.argument('docs', type=click.File('r'))
@@ -60,11 +95,14 @@ def main(input_filepath):
     logger = logging.getLogger(__name__)
     logger.info('extracted features from processed data')
     logger.info(input_filepath)
+    from pprint import pprint
 
     for x in os.listdir(input_filepath):
         x_ = os.path.join(input_filepath, x)
         if not os.path.isfile(x_) or not x_.endswith('xml'): continue
-        build_features(x_)
+        for feat in build_features(x_):
+            logger.info(feat['textrank'])
+        # break
     
 if __name__ == "__main__":
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'

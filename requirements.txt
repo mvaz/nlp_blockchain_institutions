@@ -14,3 +14,6 @@ pyyaml<=5.1
 wget
 # conda install -c anaconda beautifulsoup4
 lxml
+# https://github.com/wmayner/pyemd/issues/39
+textacy
+beautifulsoup4
