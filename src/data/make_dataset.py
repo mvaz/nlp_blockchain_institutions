@@ -91,7 +91,7 @@ def main(input_filepath, metadata_file, output_filepath):
 
     for filename in os.listdir(input_filepath):
         name, extension = os.path.splitext(filename)
-        if not extension == "cermxml": continue
+        if not extension == ".cermxml": continue
         
         filepath = os.path.join(input_filepath, filename)
         if not os.path.isfile(filepath): continue
