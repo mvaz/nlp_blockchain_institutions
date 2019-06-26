@@ -31,7 +31,7 @@ data:
 	cp data/external/*pdf data/raw
 	java -cp cermine-impl-1.13-jar-with-dependencies.jar pl.edu.icm.cermine.ContentExtractor -path data/raw -outputs jats
 	mv data/raw/*.cermxml data/processed/
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/processed/ docs.yml data/interim/blockchain_papers_dataset/dataset.json
 
 ## Delete all compiled Python files
 clean:
