@@ -15,34 +15,42 @@ pdfs:
 - url: https://www.ecb.europa.eu/paym/intro/publications/pdf/ecb.miptopical190604.en.pdf
   filename: ecb.miptopical190604.en.pdf
   entity: European Central Bank
+  date: 2019/6/1
 
 - url: https://www.ecb.europa.eu/pub/pdf/other/ecb.stella_project_report_september_2017.pdf
   filename: ecb.stella_project_report_september_2017.pdf
   entity: European Central Bank
+  date: 2017/9/1
 
 - url: https://www.ecb.europa.eu/pub/pdf/other/stella_project_report_march_2018.pdf
   filename: stella_project_report_march_2018.pdf
   entity: European Central Bank
+  date: 2018/3/1
 
 - url: https://www.bundesbank.de/resource/blob/707710/3f3bd66e8c8a0fbeb745886b3f072b15/mL/2017-09-distributed-data.pdf
   filename: 2017-09-distributed-data.pdf
   entity: Bundesbank
+  date: 2017/9/1
 
 - url: https://www.bundesbank.de/resource/blob/766672/29feab3f9079540441e3abda1ed2d2c1/mL/2018-10-25-blockbaster-final-report-data.pdf
   filename: 2018-10-25-blockbaster-final-report-data.pdf
   entity: Bundesbank, Deutsche Börse
+  date: 2018/10/25
 
 - url: https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/752070/cryptoassets_taskforce_final_report_final_web.pdf
   filename: cryptoassets_taskforce_final_report_final_web.pdf
   entity: UK Government
+  date: 2018/10/1
 
 - url: https://www.bankofengland.co.uk/-/media/boe/files/working-paper/2019/monetary-financing-with-interest-bearing-money.pdf
   filename: monetary-financing-with-interest-bearing-money.pdf
   entity: Bank of England
+  date: 2019/3/1
 
 - url: https://www.bankofengland.co.uk/-/media/boe/files/working-paper/2018/central-bank-digital-currencies-design-principles-and-balance-sheet-implications
   filename: central-bank-digital-currencies-design-principles-and-balance-sheet-implications.pdf
   entity: Bank of England
+  date: 2018/3/1
 
 - url: https://www.bot.or.th/English/DebtSecurities/Documents/DLT%20Scripless%20Bond.pdf
   filename: BOT_DLT_Scriptless_Bond.pdf
@@ -51,58 +59,70 @@ pdfs:
 - url: https://www.ecb.europa.eu/pub/pdf/scpops/ecbop172.en.pdf
   filename: ecbop172.en.pdf
   entity: European Central Bank
+  date: 2016/4/1
 
 - url: https://www.bis.org/cpmi/publ/d157.pdf
   filename: d157.pdf
   entity: Bank of International Settlements
+  date: 2017/2/1
 
 - url: https://www.bis.org/cpmi/publ/d174.pdf
   filename: d174.pdf
   entity: Bank of International Settlements
+  date: 2018/3/1
 
 - url: https://www.bis.org/publ/work698.pdf
   filename: work698.pdf
   entity: Bank of International Settlements
+  date: 2018/2/1
 
 - url: https://www.bis.org/publ/qtrpdf/r_qt1709f.pdf
   filename: r_qt1709f.pdf
   entity: Bank of International Settlements
+  date: 2017/9/1
 
-- url: https://www.bis.org/review/r180313a.htm
+- url: https://www.bis.org/review/r180313a.pdf
   filename: r180313a.pdf
   entity: Bank of International Settlements
+  date: 2018/3/13
 
 - url: https://www.imf.org/~/media/Files/Publications/SDN/2018/SDN1808.ashx
   filename: SDN1808.pdf
   entity: International Monetary Fund
+  date: 2018/11/1
   
 
 - url: https://www.bankofengland.co.uk/-/media/boe/files/working-paper/2017/the-economics-of-distributed-ledger-technology-for-securities-settlement.pdf
   filename: the-economics-of-distributed-ledger-technology-for-securities-settlement.pdf
   entity: Bank of England
+  date: 2017/8/1
 
 - url: https://www.federalreserve.gov/econresdata/feds/2016/files/2016095pap.pdf
   filename: 2016095pap.pdf
-  entity: Federal Reserve
+  entity: Federal Reserve Board
+  date: 2016/9/5
   
 - url: https://www.r3.com/wp-content/uploads/2018/11/CBDC_Brazil_R3.pdf
   filename: CBDC_Brazil_R3.pdf
   entity: R3
-
+  date: 2018/10/15
 
 - url: http://www.bnm.gov.my/index.php?ch=en_publication&pg=en_staffinsight&ac=45&bb=file
   filename: bnm_gov_my.pdf
   entity: Central Bank of Malaysia
+  date: 2017/9/1
   
-- url: http://www.bnm.gov.my/index.php?ch=en_publication&pg=en_staffinsight&ac=45&bb=file
-  filename: bnm_gov_my.pdf
-  entity: The Institute and Faculty of Actuaries (IFoA)
+# - url: http://www.bnm.gov.my/index.php?ch=en_publication&pg=en_staffinsight&ac=45&bb=file
+#   filename: bnm_gov_my.pdf
+#   entity: The Institute and Faculty of Actuaries (IFoA)
   
 
 - url: https://www.riksbank.se/globalassets/media/rapporter/e-krona/2018/the-riksbanks-e-krona-project-report-2.pdf
   filename: the-riksbanks-e-krona-project-report-2.pdf
   entity: Sveriges Riksbank
+  date: 2018/10/1
 
 - url: https://www.riksbank.se/globalassets/media/rapporter/e-krona/2017/rapport_ekrona_uppdaterad_170920_eng.pdf
   filename: the-riksbanks-e-krona-project-report-1.pdf
   entity: Sveriges Riksbank
+  date: 2017/9/1
