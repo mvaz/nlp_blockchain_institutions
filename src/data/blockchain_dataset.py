@@ -3,14 +3,14 @@
 Blockchain Papers Dataset
 -------------------
 A collection of papers from financial institutions about distributed ledger and
-digital assets. Contains primarily texts in English-language.
+digital assets. Contains primarily texts (sections / paragraphs) in English-language.
 Records include the following data:
-    * ``text``: Full text of the literary work.
-    * ``title``: Title of the literary work.
-    * ``author``: Author(s) of the literary work.
-    * ``year``: Year that the literary work was published.
-    * ``url``: URL at which literary work can be found online via the OTA.
-    * ``id``: Unique identifier of the literary work within the OTA.
+    * ``text``: Full text of the paper / speech / news article.
+    * ``title``: Title of the paper (optional).
+    * ``entity``: Entity responsible for the publication.
+    * ``date``: Date of publication.
+    * ``url``: URL at which work can be found online.
+    * ``filename``: Identifier of the publication within the dataset.
 This dataset was compiled by David Mimno from the Oxford Text Archive and
 stored in his GitHub repo to avoid unnecessary scraping of the OTA site. It is
 downloaded from that repo, and excluding some light cleaning of its metadata,
@@ -72,6 +72,48 @@ class BlockchainPapersDataset(Dataset):
     """
 
     full_date_range = ("0018-01-01", "1990-01-01")
+    filenames = [
+        "ecb.miptopical190604.en.pdf",
+        "ecb.stella_project_report_september_2017.pdf",
+        "stella_project_report_march_2018.pdf",
+        "2017-09-distributed-data.pdf",
+        "2018-10-25-blockbaster-final-report-data.pdf",
+        "cryptoassets_taskforce_final_report_final_web.pdf",
+        "monetary-financing-with-interest-bearing-money.pdf",
+        "central-bank-digital-currencies-design-principles-and-balance-sheet-implications.pdf",
+        "BOT_DLT_Scriptless_Bond.pdf",
+        "ecbop172.en.pdf",
+        "d157.pdf",
+        "d174.pdf",
+        "work698.pdf",
+        "r_qt1709f.pdf",
+        "r180313a.pdf",
+        "SDN1808.pdf",
+        "the-economics-of-distributed-ledger-technology-for-securities-settlement.pdf",
+        "2016095pap.pdf",
+        "CBDC_Brazil_R3.pdf",
+        "bnm_gov_my.pdf",
+        #   "bnm_gov_my.pdf",
+        "the-riksbanks-e-krona-project-report-2.pdf",
+        "the-riksbanks-e-krona-project-report-1.pdf"
+    ]
+
+    institutions = [
+        "European Central Bank",
+        "Bundesbank",
+        "Deutsche Börse",
+        "UK Government",
+        "Bank of England",
+        "Bank of Thailand",
+        "Bank of International Settlements",
+        "International Monetary Fund",
+        "Federal Reserve Board",
+        "R3",
+        "Central Bank of Malaysia",
+        #   "The Institute and Faculty of Actuaries (IFoA)",
+        "Sveriges Riksbank"
+    ]
+
 
     def __init__(self, data_dir=os.path.join(DEFAULT_DATA_DIR, NAME)):
         super(BlockchainPapersDataset, self).__init__(NAME, meta=META)
@@ -124,7 +166,6 @@ class BlockchainPapersDataset(Dataset):
             force=force,
         )
 
-
     def __iter__(self):
         if not os.path.isfile(self._filepath):
             raise OSError(
@@ -138,10 +179,8 @@ class BlockchainPapersDataset(Dataset):
     # FIXME
     def _get_filters( 
         self,
-        speaker_name,
-        speaker_party,
-        chamber,
-        congress,
+        filename,
+        institution,
         date_range,
         min_len,
     ):
@@ -161,22 +200,14 @@ class BlockchainPapersDataset(Dataset):
                     and date_range[0] <= record["date"] < date_range[1]
                 )
             )
-        if speaker_name is not None:
-            speaker_name = utils.validate_set_member_filter(
-                speaker_name, compat.string_types, valid_vals=self.speaker_names)
-            filters.append(lambda record: record.get("speaker_name") in speaker_name)
-        if speaker_party is not None:
-            speaker_party = utils.validate_set_member_filter(
-                speaker_party, compat.string_types, valid_vals=self.speaker_parties)
-            filters.append(lambda record: record.get("speaker_party") in speaker_party)
-        if chamber is not None:
-            chamber = utils.validate_set_member_filter(
-                chamber, compat.string_types, valid_vals=self.chambers)
-            filters.append(lambda record: record.get("chamber") in chamber)
-        if congress is not None:
-            congress = utils.validate_set_member_filter(
-                congress, int, valid_vals=self.congresses)
-            filters.append(lambda record: record.get("congress") in congress)
+        if filename is not None:
+            filename = utils.validate_set_member_filter(
+                filename, compat.string_types, valid_vals=self.filenames)
+            filters.append(lambda record: record.get("filename") in filename)
+        if institution is not None:
+            institution = utils.validate_set_member_filter(
+                institution, compat.string_types, valid_vals=self.institutions)
+            filters.append(lambda record: record.get("institution") in institution)
         return filters
 
 
@@ -190,7 +221,7 @@ class BlockchainPapersDataset(Dataset):
                 yield record
 
 
-    def texts(self, institution=None, date_range=None, min_len=None, limit=None):
+    def texts(self, filename=None, institution=None, date_range=None, min_len=None, limit=None):
         """
         Iterate over works in this dataset, optionally filtering by a variety
         of metadata and/or text length, and yield texts only.
@@ -210,11 +241,11 @@ class BlockchainPapersDataset(Dataset):
         Raises:
             ValueError: If any filtering options are invalid.
         """
-        filters = self._get_filters(institution, date_range, min_len)
+        filters = self._get_filters(filename, institution, date_range, min_len)
         for record in itertools.islice(self._filtered_iter(filters), limit):
             yield record["text"]
 
-    def records(self, institution=None, date_range=None, min_len=None, limit=None):
+    def records(self, filename=None, institution=None, date_range=None, min_len=None, limit=None):
         """
         Iterate over works in this dataset, optionally filtering by a variety
         of metadata and/or text length, and yield text + metadata pairs.
@@ -234,6 +265,6 @@ class BlockchainPapersDataset(Dataset):
         Raises:
             ValueError: If any filtering options are invalid.
         """
-        filters = self._get_filters(institution, date_range, min_len)
+        filters = self._get_filters(filename, institution, date_range, min_len)
         for record in itertools.islice(self._filtered_iter(filters), limit):
             yield record.pop("text"), record
