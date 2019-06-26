@@ -10,6 +10,7 @@ import re
 import textacy
 import ftfy
 import json
+import yaml
 from bs4 import BeautifulSoup
 
 def get_title(soup):
@@ -20,7 +21,7 @@ def extract_info(filename):
     with open(filename) as f:
         xmla = f.read()
         soup = BeautifulSoup(xmla, features="lxml")
-        title = get_title(soup)
+        title = get_title(soup) # FIXME
         # print(title)
         for p in get_paragraphs(soup):
             # p['title'] = title
@@ -28,7 +29,7 @@ def extract_info(filename):
             yield p
 
 def scrub(paragraph):
-    txt = ftfy.fixes.fix_line_breaks(paragraph['raw_text'])
+    txt = ftfy.fixes.fix_line_breaks(paragraph['text'])
     txt = textacy.preprocess.normalize_whitespace(txt)
     return txt
 
@@ -42,12 +43,13 @@ def get_paragraphs(soup):
             yield {
                 'section_id': sec['id'],
                 'paragraph_id': i,
-                'raw_text': p.get_text(" ", strip=True).replace('\n', ' ')}
+                'text': p.get_text(" ", strip=True).replace('\n', ' ')}
 
 
 def write_to_dataset(dataset_filename): 
     ''' 
-    Write to textacy dataset with given filename 
+    Coroutine to write to a textacy dataset - format is one json per line -
+    with given filename `dataset_filename`.
     '''
     logging.info("Opening dataset file") 
     with open(dataset_filename, 'w+') as f:
@@ -60,10 +62,20 @@ def write_to_dataset(dataset_filename):
         except GeneratorExit: 
             logging.info("Finalized dataset!") 
 
+def load_metadata(yaml_file, metadata_path : str ='pdfs'):
+    """
+    Returns a dict where  
+    - the key is the filename and 
+    - the value is the information about the document
+    """
+    d = yaml.safe_load(yaml_file)
+    return dict([(v['filename'], v) for v in d[metadata_path]] )
+
 @click.command()
 @click.argument('input_filepath', default='data/processed', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path(), default='data/interim/dataset.json')
-def main(input_filepath, output_filepath):
+@click.argument('metadata_file', default='docs.yml', type=click.File('r'))
+@click.argument('output_filepath', type=click.Path(), default='data/interim/blockchain_papers_dataset/dataset.json')
+def main(input_filepath, metadata_file, output_filepath):
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
@@ -72,18 +84,26 @@ def main(input_filepath, output_filepath):
     logger.info(input_filepath)
     logger.info(output_filepath)
 
+    metadata = load_metadata(metadata_file)
+
     sink = write_to_dataset(output_filepath)
     sink.__next__()
 
-    for x in os.listdir(input_filepath):
-        x_ = os.path.join(input_filepath, x)
-        logging.info("Processing " + x_)
-        if not os.path.isfile(x_) or not x_.endswith('xml'): continue
-        for paragraph in extract_info(x_):
-            paragraph['paper'] = x
+    for filename in os.listdir(input_filepath):
+        name, extension = os.path.splitext(filename)
+        if not extension == "cermxml": continue
+        
+        filepath = os.path.join(input_filepath, filename)
+        if not os.path.isfile(filepath): continue
+
+        logging.info("Processing " + filepath)
+        meta = metadata.get(name + ".pdf", {})
+        for paragraph in extract_info(filepath):
+            paragraph.update(meta)
             sink.send(paragraph)
     sink.close()
 
+    logger.info("finished")
 
 
 if __name__ == '__main__':

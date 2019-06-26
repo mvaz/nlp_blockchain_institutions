@@ -1,5 +1,5 @@
-#!/usr/bin/python3
 #encoding:utf-8
+#!/usr/bin/python3
 #Tutorial: http://www.knight-of-pi.org/python-3-settings-file-with-yaml-for-data-serialization
 #Licence: http://creativecommons.org/licenses/by-nc-sa/3.0/
 # Author: Johannes Bergs
@@ -14,22 +14,18 @@ from pprint import pprint
 import os
 import wget
 
-def download_url(url, file_output):
+def download_url(url: str, file_output):
     logger = logging.getLogger(__name__)
-    logger.info('downloading single document')
-    pprint(url)
-    pprint(file_output)
+    logger.info('downloading single document: ' + url)
     wget.download(url, file_output)
 
-def handle_file():
-    pass
 
 @click.command()
 @click.argument('docs', type=click.File('r'))
 @click.argument('output_filepath', type=click.Path(exists=True))
 def main(docs, output_filepath):
-    """ Runs data processing scripts to turn raw data from (../raw) into
-        cleaned data ready to be analyzed (saved in ../processed).
+    """ Downloads docs specified in input yaml file `docs` into
+    specified `output_filepath`.
     """
     logger = logging.getLogger(__name__)
     logger.info('downloading documents to external data')
@@ -41,7 +37,7 @@ def main(docs, output_filepath):
     for doc in config['pdfs']:
         try:
             download_url(doc['url'], os.path.join(output_filepath, doc['filename']))
-        except e:
+        except Exception as e:
             logger.error(e)
 
 

@@ -41,6 +41,7 @@ META = {
     ),
 }
 DOWNLOAD_URL = "https://github.com/mvaz/nlp_blockchain_institutions/archive/blockchain_papers_dataset.zip"
+DOWNLOAD_ROOT = "https://github.com/mvaz/nlp_blockchain_institutions/archive/"
 DEFAULT_DATA_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "interim"))
 
 class BlockchainPapersDataset(Dataset):
@@ -103,6 +104,26 @@ class BlockchainPapersDataset(Dataset):
                 LOGGER.error(e)
         return self._metadata
     
+    def download(self, force=False):
+        """
+        Download the data as a Python version-specific compressed json file and
+        save it to disk under the ``data_dir`` directory.
+        Args:
+            force (bool): If True, download the dataset, even if it already
+                exists on disk under ``data_dir``.
+        """
+        release_tag = "blockchain_papers_dataset{py_version}_v{data_version}".format(
+            py_version=2 if compat.PY2 else 3,
+            data_version=1.0,
+        )
+        url = compat.urljoin(DOWNLOAD_ROOT, release_tag + "/" + self._filename)
+        filepath = utils.download_file(
+            url,
+            filename=self._filename,
+            dirpath=self.data_dir,
+            force=force,
+        )
+
 
     def __iter__(self):
         if not os.path.isfile(self._filepath):
