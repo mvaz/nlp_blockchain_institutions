@@ -75,17 +75,13 @@ def prepare_lang(lang="en_core_web_lg"):
     patterns = [dict(label = 'ORG', pattern=l) for k in entities for l in entities[k]]
     # add the pattern to the matcher object
     ruler.add_patterns(patterns)
-    # nlp.remove_pipe('entities')
-    # nlp.add_pipe(ruler, name='entities')
     nlp = _safe_add_pipe(nlp, 'entities', ruler)
 
     ruler = EntityRuler(nlp)
     tech_patterns = [dict(label = 'TECH', pattern=l) for t in tech for l in tech[t]]
     ruler.add_patterns(tech_patterns)
     # add the matcher object as a new pipe to the model
-    # nlp.remove_pipe('tech')
     nlp = _safe_add_pipe(nlp, 'tech', ruler)
-    # nlp.add_pipe(ruler, name='tech')
 
     return nlp
     
