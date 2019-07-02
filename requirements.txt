@@ -17,3 +17,5 @@ lxml
 # https://github.com/wmayner/pyemd/issues/39
 textacy
 beautifulsoup4
+ftfy
+pyLDAvis

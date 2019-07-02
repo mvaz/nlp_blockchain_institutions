@@ -53,9 +53,12 @@ tech = {
         [{'LOWER': 'distributed'}, {'LOWER': 'ledger'}, {'LOWER': 'technology'}]
     ],
     'blokchain': [
-        [{'LOWER': 'blockchain'}]
+        [{'LEMMA': 'blockchain'}]
     ],
-   
+    'consensus': [
+        [{'LOWER': 'consensus'}, {'LOWER': 'mechanism'}],
+        [{'LOWER': 'pbft'},]
+    ],   
 }
 
 def _safe_add_pipe(lang, pipename, pipe):
@@ -78,6 +81,7 @@ def prepare_lang(lang="en_core_web_lg"):
     nlp = _safe_add_pipe(nlp, 'entities', ruler)
 
     ruler = EntityRuler(nlp)
+    nlp.vocab.strings.add('TECH') 
     tech_patterns = [dict(label = 'TECH', pattern=l) for t in tech for l in tech[t]]
     ruler.add_patterns(tech_patterns)
     # add the matcher object as a new pipe to the model
